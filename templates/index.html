@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Election Tracker - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-vote-yea text-primary"></i> Election Tracker
+        </h1>
+        <p class="lead">Comprehensive tracking of state legislative elections across all 50 states</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card stats-card text-center">
+            <div class="card-body">
+                <i class="fas fa-vote-yea fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">{{ stats.total_elections }}</h3>
+                <p class="card-text">Total Elections</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card text-center">
+            <div class="card-body">
+                <i class="fas fa-map fa-3x text-success mb-3"></i>
+                <h3 class="card-title">{{ stats.states_covered }}</h3>
+                <p class="card-text">States Covered</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card text-center">
+            <div class="card-body">
+                <i class="fas fa-user-times fa-3x text-warning mb-3"></i>
+                <h3 class="card-title">{{ stats.uncontested_count }}</h3>
+                <p class="card-text">Uncontested Races</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card text-center">
+            <div class="card-body">
+                <i class="fas fa-building fa-3x text-info mb-3"></i>
+                <h3 class="card-title">{{ stats.offices_tracked }}</h3>
+                <p class="card-text">Office Types</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-search"></i> Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/elections" class="btn btn-primary">
+                        <i class="fas fa-list"></i> Browse All Elections
+                    </a>
+                    <a href="/elections?uncontested=true" class="btn btn-warning">
+                        <i class="fas fa-user-times"></i> View Uncontested Races
+                    </a>
+                    <a href="/states" class="btn btn-success">
+                        <i class="fas fa-map"></i> State Overview
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle"></i> About This Data
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>This database tracks state legislative elections across all 50 states, including:</p>
+                <ul class="mb-0">
+                    <li><strong>State Senate</strong> elections</li>
+                    <li><strong>State House/Assembly</strong> elections</li>
+                    <li>Election dates and contested status</li>
+                    <li>Incumbent information where available</li>
+                </ul>
+                <hr>
+                <small class="text-muted">
+                    <i class="fas fa-database"></i> Data sourced from Ballotpedia
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

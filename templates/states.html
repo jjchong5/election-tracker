@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}States - Election Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-map text-primary"></i> States Overview
+        </h1>
+        <p class="lead">Election coverage by state</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-bar"></i> State Statistics
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>State</th>
+                                <th>Total Elections</th>
+                                <th>Uncontested Races</th>
+                                <th>Office Types</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for state in state_stats %}
+                            <tr>
+                                <td>
+                                    <strong>{{ state.state }}</strong>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ state.total_elections }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-{% if state.is_uncontested > 0 %}warning{% else %}success{% endif %}">
+                                        {{ state.is_uncontested }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% for office in state.office %}
+                                    <span class="badge bg-info me-1">{{ office }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a href="/elections?state={{ state.state }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-search"></i> View Elections
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-trophy"></i> Top 10 States
+                </h5>
+            </div>
+            <div class="card-body">
+                <ol class="list-group list-group-numbered">
+                    {% for state in state_stats[:10] %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>{{ state.state }}</strong>
+                        <span class="badge bg-primary rounded-pill">{{ state.total_elections }}</span>
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle"></i> Coverage Summary
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h3 class="text-primary">{{ state_stats|length }}</h3>
+                        <p class="text-muted">States Covered</p>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-success">{{ state_stats|sum(attribute='total_elections') }}</h3>
+                        <p class="text-muted">Total Elections</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h3 class="text-warning">{{ state_stats|sum(attribute='is_uncontested') }}</h3>
+                        <p class="text-muted">Uncontested Races</p>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-info">100%</h3>
+                        <p class="text-muted">Coverage</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
